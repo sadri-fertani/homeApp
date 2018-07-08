@@ -1,0 +1,29 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                <Content [hidden]="currentTab=='Outgoing'">Sender</Content>
+                <Content [hidden]="currentTab=='Incoming'">Target</Content>
+            </th>
+            <th>Body</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let msg of currentLst" (click)="markAsRead(msg)" [class.info]="currentTab=='Incoming' && !msg.readed" >
+            <td>
+                <Content [hidden]="currentTab=='Outgoing'">{{msg.sender}}</Content>
+                <Content [hidden]="currentTab=='Incoming'">{{msg.target}}</Content>
+            </td>
+            <td>
+                {{msg.body}}
+            </td>
+            <td>
+                {{msg.date}}
+            </td>
+        </tr>
+        <tr *ngIf="currentLst.length ==0">
+            <td align="center" colspan="3">Empty list</td>
+        </tr>
+    </tbody>
+</table>

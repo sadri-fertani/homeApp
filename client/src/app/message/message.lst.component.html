@@ -1,0 +1,17 @@
+<div>
+    <ul class="nav nav-tabs">
+        <li role="presentation" [class.active]="currentTab == 'Incoming'">
+            <a role="button" routerLinkActive="active" (click)="switchTabs('Incoming')">
+                Incoming
+            </a>
+        </li>
+        <li role="presentation" [class.active]="currentTab == 'Outgoing'">
+            <a role="button" routerLinkActive="active" (click)="switchTabs('Outgoing')">
+                Outgoing
+            </a>
+        </li>
+    </ul>
+    
+    <msg-table [CurrentTab]="currentTab"></msg-table>
+    
+</div>

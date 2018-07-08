@@ -1,0 +1,83 @@
+<div style="text-align: left">
+    <a routerLink="/users/add" routerLinkActive="active">Add User</a>
+    <br />
+    <br />
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>eMail</th>
+                <th>Admin</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of lstUsers; let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td>
+                    {{user.name}}
+                </td>
+                <td>
+                    <a href="mailto:{{user.email}}?subject=Help&body=I need help">{{user.email}}</a>
+                </td>
+                <td>
+                    {{user.admin}}
+                </td>
+                <td>
+                    <a role="button" *ngIf="auth.User.email != user.email" data-toggle="modal" data-target="#myModal" title="Send message to '{{user.name}}'"
+                        class="glyphicon glyphicon-pencil" (click)="initModalMesssage(user)"></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Modal -->
+    <div id="myModal" #myModal class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="padding:35px 50px;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4>
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        Message to {{user ? user.name : ''}}
+                    </h4>
+                </div>
+                <div class="modal-body" style="padding:40px 50px;">
+                    <form [formGroup]="form" role="form">
+                        <div class="form-group" [ngClass]="{'has-error': (!title.valid && title.touched), 'has-success': (title.valid && title.touched)}">
+                            <label for="title">Title</label>
+                            <input [formControl]="title" type="text" class="form-control" id="title" placeholder="Enter title" required autofocus>
+                        </div>
+                        <div class="form-group" [ngClass]="{'has-error': (!message.valid && message.touched), 'has-success': (message.valid && message.touched)}">
+                            <label for="message">Message</label>
+                            <textarea [formControl]="message" class="form-control" id="message" rows="3" placeholder="Enter message" required></textarea>
+                        </div>
+                        <button [disabled]="!form.valid" type="submit" class="btn btn-success btn-block" (click)="sendMesssage(user, form.value.title, form.value.message)">
+                            <span class="glyphicon glyphicon-send"></span>
+                            Send
+                        </button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-remove"></span>
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="alert alert-dismissable alert-success" [hidden]="!statut.success">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{statut.userMessage}}
+    </div>
+    <div class="alert alert-dismissable alert-danger" [hidden]="!statut.error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        {{statut.userMessage}}
+    </div>
+</div>
