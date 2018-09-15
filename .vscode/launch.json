@@ -7,7 +7,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Lancer Chrome sur localhost",
+            "name": "Client",
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}/client"
         },
@@ -15,8 +15,21 @@
             "type": "chrome",
             "request": "attach",
             "name": "Attach to Chrome",
-            "port": 4200,
+            "port": 9222,
             "webRoot": "${workspaceFolder}/client"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Server",
+            "program": "${workspaceFolder}/server/app/server.js"
+        }
+
+    ],
+    "compounds": [
+        {
+            "name": "Server/Client",
+            "configurations": ["Server", "Client"]
         }
     ]
 }
